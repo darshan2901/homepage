@@ -72,7 +72,7 @@ class Dashboard extends StatelessWidget {
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 18.0),
-                              )
+                              ),
                             ],
                           ),
                         ),
