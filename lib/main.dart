@@ -1,4 +1,5 @@
 // import 'dart:async';
+// import 'dart:html';
 import 'package:flutter/material.dart';
 // import 'package:barcode_scan/barcode_scan.dart';
 
@@ -13,7 +14,32 @@ void main() => runApp(new MaterialApp(
 class Dashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final buttonScan = Padding(
+      padding: EdgeInsets.only(top: 1),
+      child: Container(
+        // width: size.width * 0.6,
+        child: ButtonTheme(
+          height: 20,
+          child: RaisedButton(
+            child: Text('Scan Here',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                )),
+            color: Colors.black87,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            onPressed: () => {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => QrPage())),
+            },
+          ),
+        ),
+      ),
+    );
+
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       appBar: new AppBar(
         centerTitle: true,
@@ -51,8 +77,8 @@ class Dashboard extends StatelessWidget {
                   runSpacing: 20.0,
                   children: <Widget>[
                     SizedBox(
-                      height: 160.0,
-                      width: 160.0,
+                      height: 180.0,
+                      width: 180.0,
                       child: Card(
                         color: Colors.white,
                         child: Padding(
@@ -79,12 +105,12 @@ class Dashboard extends StatelessWidget {
                       ),
                     ),
                     SizedBox(
-                      height: 160.0,
-                      width: 160.0,
+                      height: 180.0,
+                      width: 180.0,
                       child: Card(
                         color: Colors.white,
                         child: Padding(
-                          padding: EdgeInsets.all(22.0),
+                          padding: EdgeInsets.all(20.0),
                           child: Column(
                             children: <Widget>[
                               Image.asset(
@@ -94,21 +120,22 @@ class Dashboard extends StatelessWidget {
                               SizedBox(
                                 height: 22.0,
                               ),
-                              Text(
-                                "Scan Here",
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18.0),
-                              ),
+                              // Text(
+                              //   "Scan Here",
+                              //   style: TextStyle(
+                              //       color: Colors.black,
+                              //       fontWeight: FontWeight.bold,
+                              //       fontSize: 18.0),
+                              // ),
+                              buttonScan,
                             ],
                           ),
                         ),
                       ),
                     ),
                     SizedBox(
-                      height: 160.0,
-                      width: 160.0,
+                      height: 180.0,
+                      width: 180.0,
                       child: Card(
                         color: Colors.white,
                         child: Padding(
@@ -135,8 +162,8 @@ class Dashboard extends StatelessWidget {
                       ),
                     ),
                     SizedBox(
-                      height: 160.0,
-                      width: 160.0,
+                      height: 180.0,
+                      width: 180.0,
                       child: Card(
                         color: Colors.white,
                         child: Padding(
@@ -163,8 +190,8 @@ class Dashboard extends StatelessWidget {
                       ),
                     ),
                     SizedBox(
-                      height: 160.0,
-                      width: 160.0,
+                      height: 180.0,
+                      width: 180.0,
                       child: Card(
                         color: Colors.white,
                         child: Padding(
@@ -191,8 +218,8 @@ class Dashboard extends StatelessWidget {
                       ),
                     ),
                     SizedBox(
-                      height: 160.0,
-                      width: 160.0,
+                      height: 180.0,
+                      width: 180.0,
                       child: Card(
                         color: Colors.white,
                         child: Padding(
