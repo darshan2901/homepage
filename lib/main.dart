@@ -1,6 +1,9 @@
 // import 'dart:async';
 // import 'dart:html';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:barcode_scan_fix/barcode_scan.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 // import 'package:barcode_scan/barcode_scan.dart';
 
 void main() => runApp(new MaterialApp(
@@ -14,30 +17,6 @@ void main() => runApp(new MaterialApp(
 class Dashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final buttonScan = Padding(
-      padding: EdgeInsets.only(top: 1),
-      child: Container(
-        // width: size.width * 0.6,
-        child: ButtonTheme(
-          height: 20,
-          child: RaisedButton(
-            child: Text('Scan Here',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                )),
-            color: Colors.black87,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-            onPressed: () => {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => QrPage())),
-            },
-          ),
-        ),
-      ),
-    );
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
@@ -111,24 +90,29 @@ class Dashboard extends StatelessWidget {
                         color: Colors.white,
                         child: Padding(
                           padding: EdgeInsets.all(20.0),
-                          child: Column(
-                            children: <Widget>[
-                              Image.asset(
-                                'assets/scan.png',
-                                width: 64.0,
-                              ),
-                              SizedBox(
-                                height: 22.0,
-                              ),
-                              // Text(
-                              //   "Scan Here",
-                              //   style: TextStyle(
-                              //       color: Colors.black,
-                              //       fontWeight: FontWeight.bold,
-                              //       fontSize: 18.0),
-                              // ),
-                              buttonScan,
-                            ],
+                          child: InkWell(
+                            onTap: () => {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => QrPage())),
+                            },
+                            child: Column(
+                              children: <Widget>[
+                                Image.asset(
+                                  'assets/scan.png',
+                                  width: 64.0,
+                                ),
+                                SizedBox(
+                                  height: 22.0,
+                                ),
+                                Text(
+                                  "Scan Here",
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18.0),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -307,6 +291,17 @@ class LoginPageState extends State<LoginPage>
               decoration: TextDecoration.underline)),
     );
 
+    Future<UserCredential> signInwithGoogle() async {
+      final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+      return await FirebaseAuth.instance.signInWithCredential(credential);
+    }
+
     return new Scaffold(
       backgroundColor: Colors.white,
       appBar: new AppBar(
@@ -367,15 +362,6 @@ class QrPage extends StatefulWidget {
 class _QrPageState extends State<QrPage> {
   String result = "Scan Here!";
 
-  // Future _scanQR() async{
-  //   try{
-  //     String qrResult = await BarcodeScanner.scan();
-  //     setState(() {
-  //       result = qrResult;
-  //     });
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -389,7 +375,14 @@ class _QrPageState extends State<QrPage> {
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
-          icon: Icon(Icons.camera_alt), onPressed: () {}, label: Text("Scan")),
+          icon: Icon(Icons.camera_alt),
+          onPressed: () async {
+            String codeSanner = await BarcodeScanner.scan();
+            setState(() {
+              result = codeSanner;
+            });
+          },
+          label: Text("Scan")),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
