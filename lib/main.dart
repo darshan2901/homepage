@@ -1,9 +1,9 @@
 // import 'dart:async';
 // import 'dart:html';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
 import 'package:barcode_scan_fix/barcode_scan.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+
 // import 'package:barcode_scan/barcode_scan.dart';
 
 void main() => runApp(new MaterialApp(
@@ -290,17 +290,6 @@ class LoginPageState extends State<LoginPage>
               fontWeight: FontWeight.w900,
               decoration: TextDecoration.underline)),
     );
-
-    Future<UserCredential> signInwithGoogle() async {
-      final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
-      final GoogleSignInAuthentication googleAuth =
-          await googleUser.authentication;
-      final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
-      );
-      return await FirebaseAuth.instance.signInWithCredential(credential);
-    }
 
     return new Scaffold(
       backgroundColor: Colors.white,
