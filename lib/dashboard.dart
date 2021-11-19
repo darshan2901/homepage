@@ -117,7 +117,7 @@ class Dashboard extends StatelessWidget {
                           child: InkWell(
                             onTap: () => {
                               Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => MyFormField())),
+                                  builder: (context) => DynamicEvent())),
                             },
                             child: Column(
                               children: <Widget>[
